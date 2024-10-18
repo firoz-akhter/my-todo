@@ -2,9 +2,14 @@ import React from "react"
 
 
 
-function ToDoItem() {
+function ToDoItem({item}) {
     return (
-        <div>ToDoItem component</div>
+        <div>
+            {item.text}
+            {/* completed button */}
+            {/* edit button */}
+            {/* delete button or icon */}
+        </div>
     )
 }
 
