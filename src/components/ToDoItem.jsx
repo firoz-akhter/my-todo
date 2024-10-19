@@ -2,13 +2,13 @@ import React from "react"
 
 
 
-function ToDoItem({item}) {
+function ToDoItem({item, handleDelete, handleEdit, toggleComplete}) {
     return (
-        <div>
+        <div key={item.id} id={item.id}>
             {item.text}
-            {/* completed button */}
-            {/* edit button */}
-            {/* delete button or icon */}
+            <button onClick={toggleComplete}>Complete</button>
+            <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleDelete}>Delete</button>
         </div>
     )
 }
