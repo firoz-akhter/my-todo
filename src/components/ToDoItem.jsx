@@ -1,17 +1,39 @@
-import React from "react"
+import React, { useCallback, useState } from "react"
+import "../css/ToDoItem.css"
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 
-function ToDoItem({item, handleDelete, handleEdit, toggleComplete}) {
+function ToDoItem({ item, handleDelete, handleEdit, toggleComplete }) {
+    const [lineThrough, setLineThrough] = useState(item.complete);
+
+    function handleComplete(e) {
+        setLineThrough(!lineThrough);
+        toggleComplete(e);
+    }
+
+    function handlingDelete(e) {
+        // console.log(e.target.parentElement.parentElement.parentElement);
+        e.target.parentElement.parentElement.parentElement.parentElement.classList.add("fall");
+        setTimeout(() => {
+            handleDelete(e);
+        }, 500);
+    }
+    
     return (
-        <div key={item.id} id={item.id}>
-            {item.text}
-            <button onClick={toggleComplete}>Complete</button>
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
+        <div className="item" key={item.id} id={item.id}>
+            <div className="text" style={{ textDecoration: lineThrough ? 'line-through' : 'none' }}>{item.text}</div>
+            <div id={item.id}>
+                <button onClick={handleComplete} className="complete-btn"><FontAwesomeIcon icon={faCheck} /></button>
+                <button onClick={handleEdit} className="edit-btn"><FontAwesomeIcon icon={faEdit} /></button>
+                <button  className="delete-btn"><FontAwesomeIcon onClick={handlingDelete}  icon={faTrash} /></button>
+            </div>
         </div>
     )
 }
 
 
-export default ToDoItem
+export default ToDoItem;

@@ -22,6 +22,10 @@ function App() {
   function handleAdd(e) {
     e.preventDefault();
     let input = document.querySelector(".new-item");
+    if(input.value === "") {
+      alert("todo can't be empty");
+      return;
+    }
     let newItem = {id: Date.now(), text: input.value, complete: false};
     setItemList([...itemList, newItem]);
     console.log(itemList);
@@ -30,21 +34,26 @@ function App() {
 
   function toggleComplete(e) {
     console.log("toggling complete");
-    let currId = parseInt(e.target.parentElement.id);
+    let currId = parseInt(e.target.parentElement.parentElement.parentElement.id);
+    console.log("currId", currId);
+
     
     for(let i=0; i<itemList.length; i++) {
       if(itemList[i].id === currId) {
         itemList[i].complete = !itemList[i].complete;
-        break;
+        break; 
       }
     }
     setItemList(itemList);
+    console.log(itemList);
   }
 
   function handleDelete(e) {
     console.log("deleting item...");
+    // console.log(e.target.parentElement.parentElement);
     
-    let currId = parseInt(e.target.parentElement.id);
+    let currId = parseInt(e.target.parentElement.parentElement.parentElement.id);
+    // console.log(e.target.parentElement.parentElement.parentElement)
     let newList = itemList.filter(item => item.id !== currId);
     setItemList(newList);
   }
@@ -52,7 +61,7 @@ function App() {
   function handleEdit(e) {
     console.log("editing item...");
     
-    let currId = parseInt(e.target.parentElement.id);
+    let currId = parseInt(e.target.parentElement.parentElement.parentElement.id);
     for(let i=0; i<itemList.length; i++) {
       if(itemList[i].id === currId) {
         setEditItem(itemList[i]);
@@ -84,6 +93,11 @@ function App() {
 
   }
 
+  function closeForm() {
+    console.log("closing form")
+    setOpenEdit(!openEdit);
+  }
+
 
 
 
@@ -98,10 +112,15 @@ function App() {
       <ToDoList itemList={itemList} setItemList={setItemList} toggleComplete={toggleComplete} handleDelete={handleDelete} handleEdit={handleEdit} handleAdd={handleAdd} />
 
       {openEdit && 
-        <form className='edit-form'>
-          <input className='edit-input' type="text" defaultValue={editItem.text} />
-          <button onClick={handleSave} >Save</button>
-        </form>}
+        <>
+          <div className='overlay' onClick={closeForm}></div>
+          <form className='edit-form'>
+            <input className='edit-input' type="text" defaultValue={editItem.text} />
+            <button onClick={handleSave} >Save</button>
+          </form>
+        </>
+      }
+        
     </div>
   )
 }

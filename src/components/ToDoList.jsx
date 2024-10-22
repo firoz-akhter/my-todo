@@ -1,5 +1,9 @@
 import React from "react";
 import ToDoItem from "./ToDoItem";
+import "../css/ToDoList.css"
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -8,25 +12,24 @@ function ToDoList({itemList, setItemList, handleDelete, toggleComplete, handleEd
     
 
 
-
     return (
         <div>
 
-            <form>
-                <input className="new-item" type="text" />
-                <button onClick={handleAdd}>Add</button>
+            <form className="add-form">
+                <input placeholder="Add Todo" type="text" className="new-item" />
+                <button onClick={handleAdd} className="add-button"><FontAwesomeIcon icon={faPlus} /></button>
             </form>
 
-
-         
-            {
-                itemList.map((item) => {
-                    return   (                   
-                        <ToDoItem key={item.id} handleDelete={handleDelete} handleEdit={handleEdit} toggleComplete={toggleComplete} item={item} />
-                    )
-
-                })
-            }
+            <div className="heading">Your Todos</div>
+            <div className="items">
+                {
+                    itemList.map((item) => {
+                        return   (                   
+                            <ToDoItem key={item.id} handleDelete={handleDelete} handleEdit={handleEdit} toggleComplete={toggleComplete} item={item} />
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }
