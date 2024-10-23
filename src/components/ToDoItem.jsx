@@ -17,10 +17,10 @@ function ToDoItem({ item, handleDelete, handleEdit, toggleComplete }) {
 
     function handlingDelete(e) {
         // console.log(e.target.parentElement.parentElement.parentElement);
-        e.target.parentElement.parentElement.parentElement.parentElement.classList.add("fall");
-        setTimeout(() => {
+        // e.target.parentElement.parentElement.parentElement.parentElement.classList.add("fall");
+        // setTimeout(() => {
             handleDelete(e);
-        }, 500);
+        // }, 200);
     }
     
     return (
